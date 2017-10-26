@@ -8,10 +8,6 @@
 from scrapy import Field, Item
 
 class topItem(Item):
-    # /page-?
-    #pp_url=Field()
-    # .../?p=7232
-    pageurl=Field()
 
     #conference data
     #topic name
@@ -19,29 +15,29 @@ class topItem(Item):
     # submission_deadline
     deadline=Field()
     # conference_submission_link
-    link=Field()
+    url=Field()
     # conference_dates
     dates=Field()
     # conference_address
     address=Field()
     # proceedings_indexed_by
-    proceed=Field()
+    img=Field()
     # conference_call_for_papers
-    call=Field()
+    info=Field()
 
     # extra info
     #is_top_conference
-    top=Field()
+    # top=Field()
     #GoogleScholarH5index
     h5index=Field()
     #CORE 2017 Rating
-    c17_rate=Field()
-    #Guide2Research Overall  Ranking
-    g2r_rank=Field()
-    #Category Rankings
-    cate_rank=Field()
-    #extra
-    extra=Field()
+    # c17_rate=Field()
+    # #Guide2Research Overall  Ranking
+    # g2r_rank=Field()
+    # #Category Rankings
+    # cate_rank=Field()
+    # #extra
+    # extra=Field()
     # #Image  Processing & Computer    Vision
     # ipcv=Field()
     # #Machine Learning & Arti.Intelligence

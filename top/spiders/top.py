@@ -15,15 +15,14 @@ class topSpider(CrawlSpider):
     def start_requests(self):
         url=self.url+'/conferences'
         yield Request(url, callback=self.parse)
-        # for i in range(1,10):
-        #     yield Request(url+'/page-'+str(i), callback=self.parse)
+        for i in range(1,10):
+            yield Request(url+'/page-'+str(i), callback=self.parse)
 
     #get every conference page url
     def parse(self,response):
         urls = response.xpath('//*[@id="ajax_content"]/div/table/tr[1]/td[2]/h4/a/@href')
         for url in urls:
             page_url = self.url + url.extract()
-            print(page_url)
             yield Request(url=page_url, callback=self.parse_detail)
 
     #get detail information
@@ -32,9 +31,12 @@ class topSpider(CrawlSpider):
         detail = response.xpath('//table[1]/tr/td[2]')
         item['topic'] = response.xpath('//article[1]//header[1]/h1/text()').extract_first().strip()
         item['deadline'] = detail[0].xpath('text()').extract_first().strip()
-        item['link'] = detail[1].xpath('a/@href').extract_first().strip()
+        item['url'] = detail[1].xpath('a/@href').extract_first().strip()
         item['dates'] = detail[2].xpath('text()').extract_first().strip()
         item['address'] = detail[3].xpath('text()').extract_first().strip()\
                           +detail[3].xpath('a/text()').extract_first().strip()
-        item['proceed'] = self.url+detail[4].xpath('a/img/@src').extract_first().strip()
+        item['img'] = self.url+detail[4].xpath('a/img/@src').extract_first().strip()
+        item['info'] = '</br>'.join(map(lambda x:x.strip(),response.xpath('//*[@class="single_post"][1]/p/text()').extract()))
+        h5index=response.xpath('//*[@class="single_post"]/div[3]/table/tr[1]/td[2]/text()')
+        item['h5index'] = h5index.extract_first().strip() if h5index else ''
         yield item
