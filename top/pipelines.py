@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # coding:utf-8
 import MySQLdb
-from top import settings
+import settings
 from datetime import datetime
 
 def dbHandle():
@@ -10,8 +10,8 @@ def dbHandle():
         port=settings.MYSQL_PORT,
         user=settings.MYSQL_USER,
         passwd=settings.MYSQL_PASSWD,
-        charset="utf8",
-        use_unicode=False
+        charset="utf8mb4",
+        use_unicode=True
     )
     return conn
 
@@ -21,6 +21,7 @@ def month2str(x):
     return one2two(datetime.strptime(x,'%b').month)
 
 class TopPipeline(object):
+    num=0
     def process_item(self, item, spider):
         # add to mysql
         dbObject = dbHandle()
@@ -38,6 +39,9 @@ class TopPipeline(object):
         end_date=date1[2]+month2str(date1[0])+one2two(date1[1])
         sql = "INSERT INTO CONFERENCE (topic,deadline,start_date,end_date,url,address,img,h5index, info) " \
               "VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s) ON DUPLICATE KEY UPDATE deadline=%s"
+
+        print(str(self.num)+' '+item['topic'])
+        self.num+=1
         try:
             cursor.execute(sql, (item['topic'], deadline,start_date,end_date, item['url'],
                                  item['address'], item['img'], item['h5index'], item['info'],deadline))

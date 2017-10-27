@@ -10,12 +10,18 @@ collect conference data from http://www.guide2research.com/
     sudo pacman -S --needed cronie
     sudo systemctl start cronie
     ```
-    
-2. install dependency
+    install crontab(centos7)
+    ```sh
+    systemctl start crond
+    ```
+2. install dependency(centos7)
 
     ```sh
-    sudo pip install --upgrade mysqlclient scrapy
+    sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
+    sudo yum -y install python36u python36u-pip python36u-devel
+    sudo pip3.6 install --upgrade mysqlclient scrapy
     ```
+    
 ## usage
 
 1. change mysql usr and passwd in `settings.py`
@@ -26,6 +32,8 @@ collect conference data from http://www.guide2research.com/
 
     ```sh
     python main.py
+    #centos7
+    python3.6 main.py
     ```
     
 4. update every day
@@ -35,6 +43,7 @@ collect conference data from http://www.guide2research.com/
     ```
 
 ## reference
+
 [crontab](http://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/crontab.html)
 
 [archwiki](https://wiki.archlinux.org/index.php/Cron_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))
