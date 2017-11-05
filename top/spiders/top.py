@@ -28,15 +28,25 @@ class topSpider(CrawlSpider):
     #get detail information
     def parse_detail(self,response):
         item = topItem()
+        info = {}
+        #basic
         detail = response.xpath('//table[1]/tr/td[2]')
         item['topic'] = response.xpath('//article[1]//header[1]/h1/text()').extract_first().strip()
         item['deadline'] = detail[0].xpath('text()').extract_first().strip()
         item['url'] = detail[1].xpath('a/@href').extract_first().strip()
         item['dates'] = detail[2].xpath('text()').extract_first().strip()
         item['address'] = detail[3].xpath('text()').extract_first().strip()\
-                          +detail[3].xpath('a/text()').extract_first().strip()
+                          +' '+detail[3].xpath('a/text()').extract_first().strip()
         item['img'] = self.url+detail[4].xpath('a/img/@src').extract_first().strip()
         item['info'] = '</br>'.join(map(lambda x:x.strip(),response.xpath('//*[@class="single_post"][1]/p/text()').extract()))
         h5index=response.xpath('//*[@class="single_post"]/div[3]/table/tr[1]/td[2]/text()')
         item['h5index'] = h5index.extract_first().strip() if h5index else ''
+        #top info
+        if response.xpath('//*[@class="single_post"]/h4[2]/text()').extract_first().lower().find('top')!=-1:
+            infos=response.xpath('//*[@class="single_post"]/div[3]/table/tr')
+            for i in infos:
+                a=i.xpath('.//*[count(child::*)=0]/text()').extract()
+                k=a[0].strip()
+                v=a[1].strip()
+                info[k]=v
         yield item

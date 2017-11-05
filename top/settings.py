@@ -1,13 +1,27 @@
 # -*- coding: utf-8 -*-
 
 BOT_NAME = 'top'
-
+#mongodb
+# MONGODB_SERVER = "localhost"
+# MONGODB_PORT = 27017
+# MONGODB_DB = "topconference"
+# MONGODB_COLLECTION = "conference
+# MONGODB_URL = 'mongodb://bilibili:dilidili@cluster0-shard-00-00-kxonx.mongodb.net:27017,cluster0-shard-00-01-kxonx.mongodb.net:27017,cluster0-shard-00-02-kxonx.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin'
+MONGODB_SERVER = "localhost"
+MONGODB_PORT = 27017
+MONGODB_DB = "topconference"
+MONGODB_COLLECTION = "conference"
 # mysql
 MYSQL_HOST = 'localhost'
 MYSQL_PORT = 3600
 MYSQL_DBNAME = 'top_conference'
 MYSQL_USER = 'root'
 MYSQL_PASSWD = '0'
+#choose database
+ITEM_PIPELINES = {
+   'top.pipelines.MongoPipeline': 300,
+   # 'top.pipelines.MysqlPipeline': 301,
+}
 # LOG_FILE='/tmp/topspider.log'
 LOG_LEVEL='INFO'
 SPIDER_MODULES = ['top.spiders']
@@ -60,9 +74,7 @@ USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.5 (
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   'top.pipelines.TopPipeline': 300,
-}
+
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

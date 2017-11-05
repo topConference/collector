@@ -24,10 +24,9 @@ class topItem(Item):
     img=Field()
     # conference_call_for_papers
     info=Field()
-
     # extra info
-    #is_top_conference
-    # top=Field()
+    #all top info
+    top_info=Field()
     #GoogleScholarH5index
     h5index=Field()
     #CORE 2017 Rating

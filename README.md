@@ -1,6 +1,7 @@
 # conference collector
 
 collect conference data from http://www.guide2research.com/
+mongodb & mysql support
 
 ## install
 
@@ -24,9 +25,9 @@ collect conference data from http://www.guide2research.com/
     
 ## usage
 
-1. change mysql usr and passwd in `settings.py`
+1. change usr, passwd and pipline in `settings.py`
 
-2. create database and table refer to `create.sql`
+2. if using mysql, create database and table refer to `create.sql`
 
 3. collect one time
 
